@@ -1,125 +1,78 @@
-# Contexto Tecnológico
+# Contexto Tecnológico de Lucius
 
-### Frontend
-- **LangChain:** Versión más reciente - Framework para la creación de aplicaciones de lenguaje, utilizado para la gestión de personalidades y la orquestación del agente.
-- **React:** Versión más reciente -  Para la interfaz de usuario web (opcional, si se decide crear una interfaz web además de Slack).
+## Frontend
+- **Lenguaje Principal**
+  - Python: 3.11+ 
+  - Typing Extensions: 4.8.0 - Mejoras de tipado
+- **Integración**
+  - Slack Bolt: 1.18.0 - Integración con Slack
+  - Socket Mode: Conexión en tiempo real
 
-### Backend
-- **Python:** Versión 3.x - Lenguaje principal para el backend y la lógica del agente.
-- **Groq Llama API:**  - Modelo de lenguaje para procesamiento de lenguaje natural, seleccionado por su eficiencia y costo.
-- **Slack Bolt:** Framework para construir aplicaciones de Slack, utilizado para la integración con la API de Slack en modo Socket.
+## Backend
+- **Procesamiento de Lenguaje**
+  - LangChain Core: 0.1.40+ - Framework de procesamiento LLM
+  - Groq: 0.19.0 - Servicio de Lenguaje de Máquina
+  - Modelo: Llama 3.3 70B Versatile
 
-### Base de Datos
-- **SQLite:**  - Para almacenamiento local de datos de contexto, historial de conversaciones y configuraciones del agente (adecuado para la simplicidad inicial y prototipado rápido).
+- **Herramientas y Utilidades**
+  - Requests: 2.31.0 - Manejo de solicitudes HTTP
+  - Python-dotenv: 1.0.0 - Gestión de variables de entorno
+  - Brave Search API: Búsqueda web integrada
 
-### Infraestructura
-- **Railway:** - Plataforma de despliegue en la nube, elegida por su facilidad de uso y soporte para Dockerfile.
-- **Docker:** - Para la contenedorización de la aplicación, asegurando la consistencia del entorno entre desarrollo y producción.
-- **GitHub:** - Para el repositorio de código fuente, control de versiones y despliegue automático a través de Railway.
-- **Groq Cloud:** - Para acceder al modelo Groq Llama, proporcionando la capacidad de procesamiento del lenguaje natural.
-- **Slack API (Socket Mode):** - Para la comunicación segura y en tiempo real con Slack, utilizando el modo Socket para evitar la exposición pública del servidor.
+## Arquitectura de Servicios
+- **Componentes Principales**
+  - Agente Central (Lucius Agent)
+  - Servicio de LLM
+  - Gestor de Herramientas
+  - Integración de Slack
 
-### Herramientas de Desarrollo
-- **VSCode:**  - IDE principal para desarrollo, con extensiones para Python, Git, y Docker.
-- **pip:** - Gestor de paquetes de Python, utilizado para la gestión de dependencias del proyecto.
-- **Git:** - Control de versiones, esencial para el desarrollo colaborativo y el seguimiento de cambios.
-- **Railway CLI (opcional):** - Para gestión del despliegue y monitorización de la aplicación en Railway.
+- **Patrones de Diseño**
+  - Arquitectura Modular
+  - Principios SOLID
+  - Inyección de Dependencias
 
-## Configuración del Entorno de Desarrollo
-### Requisitos Previos
-- Python 3.x
-- Pip (Python package installer)
-- Git
-- Railway CLI (opcional)
-- Cuenta de Railway y GitHub
-- Cuenta de Groq Cloud
-- Slack App configurada con Socket Mode
+## Base de Datos y Memoria
+- **Almacenamiento**
+  - Memoria Contextual: En memoria
+  - Historial de Conversación: Limitado a 5 entradas
+- **Gestión de Memoria**
+  - Implementación temporal
+  - Planificación de sistema persistente
 
-### Pasos de Configuración
-1. Clonar el repositorio de GitHub.
-2. Crear un entorno virtual de Python: `python3 -m venv venv`
-3. Activar el entorno virtual: `source venv/bin/activate`
-4. Instalar dependencias: `pip install -r requirements.txt`
-5. Configurar variables de entorno:
-    - En el archivo `.env` (local):
-        - `SLACK_BOT_TOKEN`: Token de bot de Slack (xoxb-...).
-        - `SLACK_APP_TOKEN`: App token de Slack (xapp-...).
-        - `GROQ_API_KEY`: API Key de Groq.
-    - En Railway (despliegue):
-        - `SLACK_BOT_TOKEN`: Token de bot de Slack (xoxb-...).
-        - `SLACK_APP_TOKEN`: App token de Slack (xapp-...).
-        - `GROQ_API_KEY`: API Key de Groq.
+## Infraestructura
+- **Despliegue**
+  - Plataforma: Railway
+  - Contenedorización: Docker
+  - Imagen Base: Python 3.11 Slim Bookworm
 
-## Configuración del Entorno de Despliegue en Railway
-### Método de Despliegue
-- **Desde Repositorio GitHub usando Dockerfile:**
-    1. **Dockerfile:** Definir un Dockerfile en la raíz del proyecto para especificar el entorno de ejecución.
-        - Imagen base: `python:3.11-slim-bookworm`
-        - Directorio de trabajo: `/app`
-        - Copiar `requirements.txt` e instalar dependencias con `pip install --no-cache-dir -r requirements.txt`
-        - Copiar código fuente: `COPY . .`
-        - Comando de inicio: `CMD ["python", "lucius_agent.py"]`
-    2. **.dockerignore (opcional):**  Crear un archivo `.dockerignore` para excluir archivos innecesarios del Docker image.
-    3. **Crear Proyecto en Railway:**  Crear un nuevo proyecto en Railway y seleccionar "Deploy from GitHub repo".
-    4. **Seleccionar Repositorio:**  Conectar Railway al repositorio de GitHub del proyecto `lucius`.
-    5. **Variables de Entorno en Railway:** Configurar variables de entorno en la configuración del servicio Railway:
-        - `GROQ_API_KEY`: API Key de Groq.
-        - `SLACK_APP_TOKEN`: App token de Slack (xapp-...).
-        - `SLACK_BOT_TOKEN`: Token de bot de Slack (xoxb-...).
-        - `PORT`: `8080`.
-    6. **Exponer el servicio:** Habilitar "Public Networking" en la configuración del servicio Railway.
+## Configuración y Seguridad
+- **Gestión de Configuración**
+  - Variables de Entorno
+  - Archivo .env para configuración local
+  - Validación de configuración al inicio
 
-### Variables de Entorno
-- `GROQ_API_KEY`: API Key para acceder a la API de Groq Llama.
-- `SLACK_BOT_TOKEN`: Token de bot de Slack (xoxb-...).
-- `SLACK_APP_TOKEN`: App token de Slack (xapp-...).
-- `PORT`: Puerto en el que la aplicación escucha (por defecto 8080 para Railway).
+- **Seguridad**
+  - Manejo seguro de tokens
+  - Validación de claves API
+  - Registro de eventos y errores
 
-## Dependencias Externas
-### APIs
-- **Groq Llama API:**
-  - Propósito: Inferencias del modelo de lenguaje.
-  - Endpoints clave: Endpoint de inferencia de Groq API.
-  - Autenticación: API Key de Groq.
-- **Slack API (Socket Mode):**
-  - Propósito: Comunicación con Slack.
-  - Endpoints clave:  Slack API methods para mensajería, usuarios, etc. (detalles según necesidad).
-  - Autenticación: Tokens de Slack App y Bot.
+## Herramientas de Desarrollo
+- **Pruebas**
+  - Pytest: Framework de pruebas
+  - Cobertura de pruebas: 85%
 
-### Servicios
-- **Groq Cloud:** Servicio en la nube que aloja el modelo Groq Llama.
-- **Railway:** Plataforma de despliegue y hosting.
-- **GitHub:**  Plataforma de control de versiones y despliegue.
-- **Slack Workspace:** Espacio de trabajo de Slack donde se integrará Lucius.
+- **Calidad de Código**
+  - Tipado estático
+  - Validación de dependencias
+  - Principios de diseño SOLID
 
-## Restricciones Técnicas
-- **Limitaciones de la API de Groq:**  Dependencia de la disponibilidad y cuotas de la API de Groq.
-- **Dependencia de Railway:**  Dependencia de la plataforma Railway para el despliegue y hosting.
-- **Limitaciones de la API de Slack:** Restricciones de la API de Slack en cuanto a frecuencia de llamadas, permisos, etc.
-- **Latencia de las APIs:**  Posible latencia en las respuestas de la API de Groq y Slack.
+## Integraciones Externas
+- **Servicios**
+  - Groq API: Procesamiento de lenguaje
+  - Brave Search API: Búsqueda web
+  - Slack API: Comunicación
 
-## Decisiones Técnicas
-### 1. Uso de LangChain
-- **Contexto:** Necesidad de un framework para orquestar el agente de IA y gestionar personalidades.
-- **Decisión:** Utilizar LangChain.
-- **Justificación:** LangChain facilita la creación de agentes complejos, proporciona abstracciones y módulos útiles, y se integra bien con modelos de lenguaje y APIs, además de ofrecer herramientas para la gestión de memoria y personalidades.
-
-### 2. Modelo de Lenguaje
-- **Contexto:**  Requisito de usar Groq Llama.
-- **Decisión:** Usar Groq Llama como modelo de lenguaje principal.
-- **Justificación:** Groq Llama ofrece un buen equilibrio entre rendimiento y costo, y es compatible con LangChain.
-
-### 3. Integración con Slack
-- **Contexto:** Requisito de integrar con Slack.
-- **Decisión:** Utilizar la Slack API con Socket Mode para la comunicación.
-- **Justificación:** Socket Mode proporciona una conexión segura y en tiempo real con Slack, sin necesidad de exponer la aplicación a la red pública.
-
-### 4. Base de Datos
-- **Contexto:** Necesidad de persistencia para el contexto de conversación, historial y configuraciones de personalidad.
-- **Decisión:**  Usar SQLite para almacenamiento local.
-- **Justificación:** SQLite es simple, no requiere servidor, adecuado para las necesidades iniciales del proyecto y la gestión de personalidades.
-
-### 5. Plataforma de Despliegue
-- **Contexto:** Necesidad de una plataforma para desplegar la aplicación en la nube.
-- **Decisión:** Utilizar Railway para el despliegue.
-- **Justificación:** Railway es fácil de usar, soporta Dockerfile deployments, y ofrece una buena experiencia de desarrollo y despliegue.
+## Consideraciones de Escalabilidad
+- Arquitectura modular para fácil extensión
+- Sistema de plugins planificado
+- Diseño que permite añadir nuevas herramientas

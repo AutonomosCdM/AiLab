@@ -1,111 +1,104 @@
-## Arquitectura General del Sistema
+# Patrones de Sistema Lucius
 
-Lucius se basa en una arquitectura modular altamente extensible que integra múltiples componentes especializados para proporcionar una solución de IA flexible y adaptable.
-
+## Arquitectura General
 ```mermaid
-graph TD
-    A[LuciusAgent] --> Config[Config]
-    A --> LLM[LLM Service]
-    A --> Tools[Tool Manager]
-    A --> Slack[Slack Manager]
+flowchart TD
+    Agent[Lucius Agent] --> LLM[LLM Service]
+    Agent --> ToolManager[Tool Manager]
+    Agent --> SlackIntegration[Slack Integration]
+    
+    ToolManager --> WebSearch[Web Search Tool]
+    ToolManager --> AuthorizationManager[Authorization Manager]
     
     LLM --> PromptTemplates[Prompt Templates]
-    Tools --> BaseTool[Base Tool]
-    Tools --> SearchTool[Web Search Tool]
-    
-    Slack --> SlackAuth[Slack Auth]
-    Slack --> SlackHandlers[Slack Handlers]
-    
-    User[Usuarios] --> Slack
+    LLM --> ConversationMemory[Conversation Memory]
 ```
 
 ## Componentes Principales
 
-### 1. Agente LangChain (LuciusAgent)
-- **Propósito:** Orquestación central del sistema de IA
+### Lucius Agent
+- **Propósito:** Orquestador central del sistema
 - **Responsabilidades:**
-  - Coordinar interacciones entre componentes
-  - Gestionar flujo de conversación
-  - Manejar ejecución de herramientas
-  - Administrar cambios de personalidad
-- **Principios de Diseño:**
-  - Principio de Responsabilidad Única (SRP)
-  - Bajo acoplamiento
-  - Alta cohesión
+  - Gestionar flujo de interacciones
+  - Coordinar herramientas y servicios
+  - Manejar contexto de conversación
+- **Interfaces:**
+  - Integración con Slack
+  - Gestión de herramientas
+  - Procesamiento de entrada de usuario
 
-### 2. Servicio LLM
-- **Propósito:** Procesamiento de lenguaje natural
-- **Componentes:**
-  - Modelo Groq Llama
-  - Plantillas de Prompts
-- **Características:**
-  - Generación dinámica de respuestas
-  - Adaptación de personalidad
-  - Procesamiento contextual
+### LLM Service
+- **Propósito:** Servicio de procesamiento de lenguaje natural
+- **Responsabilidades:**
+  - Generar respuestas inteligentes
+  - Manejar plantillas de prompts
+  - Gestionar historial de conversación
+- **Características Clave:**
+  - Personalidad de Lucius Fox
+  - Detección de idioma
+  - Generación de respuestas concisas
 
-### 3. Gestor de Herramientas (ToolManager)
-- **Propósito:** Gestión modular de herramientas
-- **Características:**
-  - Carga dinámica de herramientas
-  - Ejecución flexible
-  - Extensibilidad
+### Tool Manager
+- **Propósito:** Gestión y coordinación de herramientas
+- **Responsabilidades:**
+  - Descubrir y registrar herramientas
+  - Autorizar y ejecutar herramientas
+  - Manejar dependencias entre herramientas
 - **Herramientas Implementadas:**
-  - Búsqueda Web (Brave Search)
-  - Herramientas de Slack
+  - Búsqueda web
+  - Integración de servicios externos
 
-### 4. Gestor de Slack
-- **Propósito:** Integración con plataforma Slack
-- **Componentes:**
-  - Autenticación Slack
-  - Manejadores de Eventos
+### Slack Integration
+- **Propósito:** Interfaz de comunicación
+- **Responsabilidades:**
+  - Manejar eventos de Slack
+  - Procesar mensajes entrantes
+  - Enviar respuestas
 - **Características:**
-  - Comunicación segura via Socket Mode
+  - Soporte para menciones
   - Manejo de eventos de mensaje
-  - Integración de herramientas Slack
+  - Conexión Socket Mode
 
-## Patrones de Diseño Utilizados
+## Patrones de Diseño
 
-### 1. Principio de Responsabilidad Única (SRP)
-- **Contexto:** Diseño de componentes
-- **Problema:** Evitar clases/módulos con múltiples responsabilidades
-- **Solución:** Cada componente tiene una única responsabilidad bien definida
-- **Consecuencias:** 
-  - Código más mantenible
-  - Mayor facilidad de pruebas
-  - Mejor extensibilidad
+### Principios SOLID Aplicados
+1. **Responsabilidad Única (SRP):**
+   - Cada módulo tiene una responsabilidad clara
+   - Separación de preocupaciones en componentes
 
-### 2. Patrón de Estrategia
-- **Contexto:** Gestión de personalidades y herramientas
-- **Problema:** Permitir cambios dinámicos de comportamiento
-- **Solución:** Implementación de personalidades y herramientas intercambiables
-- **Consecuencias:**
-  - Flexibilidad en tiempo de ejecución
-  - Fácil adición de nuevas personalidades/herramientas
+2. **Abierto/Cerrado:**
+   - Arquitectura modular permite extensión sin modificación
+   - Sistema de herramientas extensible
 
-### 3. Inyección de Dependencias
-- **Contexto:** Configuración de componentes
-- **Problema:** Reducir acoplamiento entre módulos
-- **Solución:** Configuración centralizada en `config.py`
-- **Consecuencias:**
-  - Mayor modularidad
-  - Facilita pruebas
-  - Configuración más flexible
+3. **Sustitución de Liskov:**
+   - Herramientas y servicios siguen interfaces comunes
+   - Intercambiabilidad de componentes
 
-## Flujos de Datos Principales
-1. Recepción de mensaje de Slack
-2. Procesamiento por LuciusAgent
-3. Selección de herramienta/personalidad
-4. Generación de respuesta con LLM
-5. Envío de respuesta a Slack
+4. **Segregación de Interfaces:**
+   - Interfaces específicas para cada tipo de servicio
+   - Minimizar dependencias innecesarias
+
+5. **Inversión de Dependencia:**
+   - Módulos dependen de abstracciones
+   - Inyección de dependencias para flexibilidad
+
+## Flujos de Datos
+
+### Procesamiento de Mensaje
+1. Slack recibe mensaje
+2. Lucius Agent procesa entrada
+3. LLM Service genera respuesta
+4. Tool Manager ejecuta herramientas si es necesario
+5. Respuesta enviada de vuelta a Slack
+
+### Ejecución de Herramienta
+1. Tool Manager recibe solicitud
+2. Verifica autorización
+3. Ejecuta herramienta específica
+4. Devuelve resultados al agente
+5. LLM integra resultados en respuesta
 
 ## Consideraciones de Extensibilidad
-- Interfaz base para herramientas
-- Configuración dinámica
-- Mecanismo de carga de plugins
-- Validación y autorización de herramientas
-
-## Mejoras Futuras
-- Sistema de plugins más robusto
-- Mecanismo de descubrimiento automático
-- Interfaz de administración de herramientas
-- Sistema de memoria contextual avanzado
+- Arquitectura permite añadir nuevas herramientas fácilmente
+- Sistema de plugins planificado para futuras versiones
+- Personalidad adaptable mediante configuración de prompts

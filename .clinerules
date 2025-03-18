@@ -1,30 +1,56 @@
 ## Project Intelligence for Lucius Agent
 
 ### Key Implementation Paths
-- Personality management is implemented in `src/modules/personalities/personality_manager.py`.
-- Dynamic prompt generation and response transformation are key features of the `PersonalityManager`.
-- LangChain is used for agent orchestration and Groq Llama for language processing.
-- Slack integration is handled via Slack Bolt and Socket Mode in `lucius_agent.py`.
+- Modular architecture with clear separation of responsibilities
+- Personality management now in `src/llm/prompt_templates.py`
+- Dynamic prompt generation with more sophisticated personality definition
+- LangChain Core and Groq Llama for advanced language processing
+- Slack integration via Slack Bolt and Socket Mode in `src/lucius_agent.py`
+
+### Architectural Principles
+- SOLID design principles applied
+- Modular system with independent components
+- Dependency injection for flexibility
+- Tools and services designed for easy extension
 
 ### User Preferences and Workflow
-- User prefers concise and technically precise responses from Lucius.
-- Sarcastic wit and ethical considerations are important personality traits.
-- User wants to maintain the option for personality switching but hide it from the CLI help text.
+- Emphasis on concise, technically precise, and strategically insightful responses
+- Personality of Lucius Fox: intelligent, strategic, with subtle humor
+- Ability to adapt communication style while maintaining core personality traits
 
 ### Project-Specific Patterns
-- JSON files in `src/modules/personalities/` directory define personality configurations.
-- `test_lucius_personality.py` is used for testing personality features and CLI interaction.
+- Personality configurations in `src/modules/personalities/`
+- Centralized configuration management in `src/config.py`
+- Tool management with flexible, modular approach
+- Comprehensive test coverage across components
 
 ### Learned Tool Usage Patterns
-- `replace_in_file` can be challenging for multi-line replacements; `write_to_file` is a more robust alternative for complex changes.
-- `search_files` and `read_file` are useful for understanding existing code and debugging issues.
-- `execute_command` is essential for running tests and Git commands.
+- Prefer `write_to_file` for complex, multi-line replacements
+- Use `search_files` for code exploration and debugging
+- `execute_command` essential for tests, Git operations, and deployment
+- Careful management of imports and dependencies
 
 ### Known Challenges
-- Balancing verbosity and context in Lucius' responses requires careful tuning of the `PersonalityManager`.
-- Handling API key and token securely is crucial for deployment.
+- Managing complexity of modular architecture
+- Balancing performance with extensibility
+- Maintaining consistent personality across different interactions
+- Secure handling of API keys and tokens
+
+### Deployment Considerations
+- Docker-based deployment
+- Railway as primary deployment platform
+- Environment variable management
+- Secure token handling
 
 ### Future Improvements
-- Implement more sophisticated sentiment analysis and topic detection.
-- Add support for more memory types and long-term memory.
-- Explore additional personality traits and customization options.
+- Implement advanced long-term memory system
+- Develop intelligent plugin mechanism
+- Create adaptive learning for personality
+- Enhance sentiment analysis and context understanding
+- Explore multi-modal communication interfaces
+
+### Ethical and Security Guidelines
+- Maintain transparency in AI interactions
+- Implement robust privacy controls
+- Ensure ethical use of AI capabilities
+- Prevent misuse of tool execution
