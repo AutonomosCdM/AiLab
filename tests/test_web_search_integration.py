@@ -17,7 +17,7 @@ if not os.environ.get('BRAVE_SEARCH_API_KEY'):
     sys.exit(1)
 
 # Importar el agente Lucius
-from lucius_agent import LuciusAgent
+from src.lucius_agent import LuciusAgent
 
 def main():
     # Inicializar el agente
@@ -25,7 +25,7 @@ def main():
     agent = LuciusAgent()
     
     # Verificar herramientas disponibles
-    print(f"\nHerramientas generales disponibles: {agent.available_tools}")
+    print(f"\nHerramientas generales disponibles: {agent.tool_manager.list_tools()}")
     
     # Simular una consulta que requiera búsqueda web
     test_queries = [
@@ -49,7 +49,7 @@ web_search: {query}
         
         # Ejecutar la herramienta
         print("Ejecutando búsqueda web...")
-        result = agent._execute_tool("web_search", query)
+        result = agent.tool_manager.execute_tool("web_search", query)
         print("\nResultado:")
         print(result)
     

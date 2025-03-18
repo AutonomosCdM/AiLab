@@ -1,22 +1,26 @@
+#!/usr/bin/env python
 from setuptools import setup, find_packages
 
 setup(
-    name="lucius",
-    version="0.1.0",
-    packages=find_packages(),
-    install_requires=[
-        'langchain',
-        'langchain-community',
-        'langchain-groq',
-        'groq',
-        'slack_bolt',
-        'slack_sdk',
-        'python-dotenv',
-        'pytest',
-        'pytest-asyncio',
-        'requests'
-    ],
+    name="lucius-agent",
+    version="0.2.0",
+    description="Agente de IA Lucius para Slack",
     author="Autonomos AiLab",
-    description="AI Assistant for Executive Teams",
-    python_requires='>=3.8',
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
+    install_requires=[
+        "slack-bolt>=1.18.0",
+        "slack-sdk>=3.21.3",
+        "langchain-groq>=0.1.0",
+        "langchain-core>=0.1.18",
+        "requests>=2.31.0",
+        "python-dotenv>=1.0.0",
+        "typing-extensions>=4.8.0",
+    ],
+    entry_points={
+        "console_scripts": [
+            "lucius=lucius_agent:main",
+        ],
+    },
+    python_requires=">=3.8",
 )

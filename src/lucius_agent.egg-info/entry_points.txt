@@ -1,0 +1,2 @@
+[console_scripts]
+lucius = lucius_agent:main

@@ -1,4 +1,4 @@
-from lucius_agent import LuciusAgent
+from src.lucius_agent import LuciusAgent
 from dotenv import load_dotenv
 
 # Load environment variables from .env file

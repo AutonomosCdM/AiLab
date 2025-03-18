@@ -1,4 +1,5 @@
 import os
+import logging
 from langchain_community.agent_toolkits import SlackToolkit
 from slack_sdk import WebClient
 
@@ -7,16 +8,26 @@ class SlackManager:
         slack_bot_token = os.environ.get("SLACK_BOT_TOKEN")
         slack_app_token = os.environ.get("SLACK_APP_TOKEN")
 
+        # Log warning instead of raising error
         if not slack_bot_token:
-            raise ValueError("SLACK_BOT_TOKEN is not set!")
-        if not slack_app_token:
-            raise ValueError("SLACK_APP_TOKEN is not set!")
+            logging.warning("SLACK_BOT_TOKEN is not set. Slack tools will be limited.")
+            self.slack_tools = []
+            return
 
-        self.slack_toolkit = SlackToolkit(
-            slack_client=WebClient(token=slack_bot_token)
-        )
-        self.slack_tools = self.slack_toolkit.get_tools()
-        print(f"Slack tools available in SlackManager: {[tool.name for tool in self.slack_tools]}")
+        if not slack_app_token:
+            logging.warning("SLACK_APP_TOKEN is not set. Slack tools will be limited.")
+            self.slack_tools = []
+            return
+
+        try:
+            self.slack_toolkit = SlackToolkit(
+                slack_client=WebClient(token=slack_bot_token)
+            )
+            self.slack_tools = self.slack_toolkit.get_tools()
+            print(f"Slack tools available in SlackManager: {[tool.name for tool in self.slack_tools]}")
+        except Exception as e:
+            logging.error(f"Failed to initialize Slack toolkit: {e}")
+            self.slack_tools = []
 
     def get_tools(self):
         return self.slack_tools

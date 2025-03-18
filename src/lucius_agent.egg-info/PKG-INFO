@@ -1,0 +1,17 @@
+Metadata-Version: 2.2
+Name: lucius-agent
+Version: 0.2.0
+Summary: Agente de IA Lucius para Slack
+Author: Autonomos AiLab
+Requires-Python: >=3.8
+Requires-Dist: slack-bolt>=1.18.0
+Requires-Dist: slack-sdk>=3.21.3
+Requires-Dist: langchain-groq>=0.1.0
+Requires-Dist: langchain-core>=0.1.18
+Requires-Dist: requests>=2.31.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: typing-extensions>=4.8.0
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

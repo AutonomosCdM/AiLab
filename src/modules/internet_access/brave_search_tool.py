@@ -1,108 +1,143 @@
 import os
 import requests
-from typing import Dict, List, Optional
 
 class BraveSearchTool:
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key=None):
         """
-        Initialize Brave Search Tool with optional API key.
-        If no API key is provided, it will try to read from environment variable.
-        """
-        # Check if api_key is None or empty string
-        if api_key is None or api_key == "":
-            raise ValueError("Brave Search API key is required. Set BRAVE_SEARCH_API_KEY environment variable.")
-            
-        # Use provided API key or environment variable
-        self.api_key = api_key.strip() if api_key else os.environ.get('BRAVE_SEARCH_API_KEY', '').strip()
-        
-        # Double-check that we have a valid API key
-        if not self.api_key:
-            raise ValueError("Brave Search API key is required. Set BRAVE_SEARCH_API_KEY environment variable.")
-        
-        self.base_url = "https://api.search.brave.com/res/v1/web/search"
-        self.headers = {
-            "X-Subscription-Token": self.api_key,
-            "Accept": "application/json"
-        }
-
-    def search(self, query: str, count: int = 5, offset: int = 0) -> Dict:
-        """
-        Perform a web search using Brave Search API.
+        Inicializa la herramienta de búsqueda de Brave
         
         Args:
-            query (str): Search query
-            count (int, optional): Number of results to return. Defaults to 5.
-            offset (int, optional): Pagination offset. Defaults to 0.
+            api_key (str, optional): Clave API de Brave Search. 
+                Si no se proporciona, intenta obtenerla de las variables de entorno.
+        
+        Raises:
+            ValueError: Si no se proporciona una clave API válida
+        """
+        # Validar la clave API
+        if api_key is None:
+            raise ValueError("Brave Search API key is required")
+        
+        # Validar que la clave API no sea una cadena vacía
+        if api_key == "":
+            raise ValueError("Brave Search API key is required")
+        
+        self.api_key = api_key
+        self.base_url = "https://api.search.brave.com/res/v1/web/search"
+    
+    def search(self, query, count=5):
+        """
+        Búsqueda web simple
+        
+        Args:
+            query (str): Consulta de búsqueda
+            count (int, optional): Número de resultados. Defecto 5.
         
         Returns:
-            Dict containing search results
+            dict: Diccionario de resultados con clave 'status'
         """
-        params = {
-            "q": query,
-            "count": min(count, 20),  # Max 20 results per request
-            "offset": offset
+        # Limpiar la consulta
+        query = query.replace('las ultimas', '').replace('últimas', '').strip()
+        
+        headers = {
+            'X-Subscription-Token': self.api_key,
+            'Accept': 'application/json'
         }
-
+        
+        params = {
+            'q': query,
+            'count': min(count, 10)  # Limitar a 10 resultados
+        }
+        
         try:
-            response = requests.get(self.base_url, headers=self.headers, params=params)
-            response.raise_for_status()  # Raise an exception for bad status codes
+            response = requests.get(self.base_url, headers=headers, params=params)
+            response.raise_for_status()
             
-            return self._parse_results(response.json())
+            # Parsear resultados
+            parsed_results = self._parse_results(response.json())
+            
+            return {
+                'status': 'success',
+                'results': parsed_results
+            }
         
         except requests.exceptions.RequestException as e:
+            # Manejar específicamente errores de solicitud
+            if e.response and e.response.status_code == 429:
+                # Manejar específicamente el error de demasiadas solicitudes
+                return {
+                    'status': 'error',
+                    'error': "Límite de solicitudes alcanzado. Intenta de nuevo más tarde."
+                }
             return {
-                "error": f"Search request failed: {str(e)}",
-                "status": "error"
+                'status': 'error',
+                'error': str(e)
             }
-
-    def _parse_results(self, raw_results: Dict) -> Dict:
+    
+    def _parse_results(self, data):
         """
-        Parse and format raw Brave Search API results.
+        Parsear resultados de manera simple
         
         Args:
-            raw_results (Dict): Raw JSON results from Brave Search API
+            data (dict): Datos brutos de la API de Brave Search
         
         Returns:
-            Dict with parsed and formatted results
+            list: Resultados procesados
         """
-        try:
-            results = []
-            for result in raw_results.get('web', {}).get('results', []):
-                results.append({
-                    "title": result.get('title', ''),
-                    "url": result.get('url', ''),
-                    "description": result.get('description', '')
-                })
-            
-            return {
-                "status": "success",
-                "query": raw_results.get('query', ''),
-                "total_results": raw_results.get('web', {}).get('total', 0),
-                "results": results
-            }
+        results = []
+        for item in data.get('web', {}).get('results', []):
+            results.append({
+                'title': item.get('title', '').replace('<strong>', '').replace('</strong>', ''),
+                'url': item.get('url', ''),
+                'description': item.get('description', '').replace('<strong>', '').replace('</strong>', '')
+            })
         
-        except Exception as e:
-            return {
-                "error": f"Error parsing search results: {str(e)}",
-                "status": "error"
-            }
-
-    def summarize_results(self, results: Dict, max_results: int = 3) -> str:
+        return results
+    
+    def summarize_results(self, search_results):
         """
-        Generate a concise summary of search results.
+        Genera un resumen de los resultados de búsqueda
         
         Args:
-            results (Dict): Search results from search method
-            max_results (int, optional): Maximum number of results to include. Defaults to 3.
+            search_results (dict): Resultados de búsqueda
         
         Returns:
-            str: Summarized search results
+            str: Resumen de los resultados
         """
-        if results.get('status') != 'success':
-            return results.get('error', 'Search failed.')
+        # Manejar caso de error
+        if search_results['status'] != 'success':
+            return f"Search request failed: {search_results.get('error', 'Unknown error')}"
         
-        summary_parts = []
-        for result in results['results'][:max_results]:
-            summary_parts.append(f"• {result['title']}: {result['description'][:100]}...")
+        # Formatear resultados exitosos
+        results = search_results['results']
         
-        return f"Resultados de búsqueda para '{results['query']}':\n" + "\n".join(summary_parts)
+        # Generar resumen
+        summary = "Resultados de búsqueda:\n\n"
+        for i, result in enumerate(results[:3], 1):
+            summary += f"{i}. {result['title']}\n"
+            summary += f"   {result['description'][:150]}...\n"
+            summary += f"   🔗 {result['url']}\n\n"
+        
+        return summary
+    
+    def format_results(self, search_results):
+        """
+        Formatear resultados para presentación
+        
+        Args:
+            search_results (dict): Resultados de búsqueda
+        
+        Returns:
+            str: Resultados formateados
+        """
+        # Manejar caso de error
+        if search_results['status'] != 'success':
+            return f"Error en la búsqueda: {search_results.get('error', 'Unknown error')}"
+        
+        # Formatear resultados exitosos
+        results = search_results['results']
+        formatted_results = []
+        for i, result in enumerate(results[:3], 1):
+            formatted_result = f"{i}. **{result['title']}**\n   {result['description'][:150]}...\n   🔗 {result['url']}"
+            formatted_results.append(formatted_result)
+        
+        return "\n\n".join(formatted_results)
