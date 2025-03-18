@@ -2,7 +2,7 @@
 import logging
 from typing import Dict, List, Any, Optional
 from langchain_groq import ChatGroq
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 
 from src.config import Config
 from .prompt_templates import PromptTemplates
