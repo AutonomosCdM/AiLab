@@ -1,29 +1,29 @@
 # Contexto Tecnológico
 
 ### Frontend
-- **LangChain:** Versión más reciente - Framework para la creación de aplicaciones de lenguaje.
+- **LangChain:** Versión más reciente - Framework para la creación de aplicaciones de lenguaje, utilizado para la gestión de personalidades y la orquestación del agente.
 - **React:** Versión más reciente -  Para la interfaz de usuario web (opcional, si se decide crear una interfaz web además de Slack).
 
 ### Backend
 - **Python:** Versión 3.x - Lenguaje principal para el backend y la lógica del agente.
-- **Groq Llama API:**  - Modelo de lenguaje para procesamiento de lenguaje natural.
-- **Slack Bolt:** Framework para construir aplicaciones de Slack.
+- **Groq Llama API:**  - Modelo de lenguaje para procesamiento de lenguaje natural, seleccionado por su eficiencia y costo.
+- **Slack Bolt:** Framework para construir aplicaciones de Slack, utilizado para la integración con la API de Slack en modo Socket.
 
 ### Base de Datos
-- **SQLite:**  - Para almacenamiento local de datos de contexto y configuraciones del agente (adecuado para la simplicidad inicial).
+- **SQLite:**  - Para almacenamiento local de datos de contexto, historial de conversaciones y configuraciones del agente (adecuado para la simplicidad inicial y prototipado rápido).
 
 ### Infraestructura
-- **Railway:** - Plataforma de despliegue en la nube.
-- **Docker:** - Para la contenedorización de la aplicación.
-- **GitHub:** - Para el repositorio de código y despliegue automático.
-- **Groq Cloud:** - Para acceder al modelo Groq Llama.
-- **Slack API (Socket Mode):** - Para la comunicación con Slack.
+- **Railway:** - Plataforma de despliegue en la nube, elegida por su facilidad de uso y soporte para Dockerfile.
+- **Docker:** - Para la contenedorización de la aplicación, asegurando la consistencia del entorno entre desarrollo y producción.
+- **GitHub:** - Para el repositorio de código fuente, control de versiones y despliegue automático a través de Railway.
+- **Groq Cloud:** - Para acceder al modelo Groq Llama, proporcionando la capacidad de procesamiento del lenguaje natural.
+- **Slack API (Socket Mode):** - Para la comunicación segura y en tiempo real con Slack, utilizando el modo Socket para evitar la exposición pública del servidor.
 
 ### Herramientas de Desarrollo
-- **VSCode:**  - IDE principal para desarrollo.
-- **pip:** - Gestor de paquetes de Python.
-- **Git:** - Control de versiones.
-- **Railway CLI (opcional):** - Para gestión del despliegue.
+- **VSCode:**  - IDE principal para desarrollo, con extensiones para Python, Git, y Docker.
+- **pip:** - Gestor de paquetes de Python, utilizado para la gestión de dependencias del proyecto.
+- **Git:** - Control de versiones, esencial para el desarrollo colaborativo y el seguimiento de cambios.
+- **Railway CLI (opcional):** - Para gestión del despliegue y monitorización de la aplicación en Railway.
 
 ## Configuración del Entorno de Desarrollo
 ### Requisitos Previos
@@ -100,9 +100,9 @@
 
 ## Decisiones Técnicas
 ### 1. Uso de LangChain
-- **Contexto:** Necesidad de un framework para orquestar el agente de IA.
+- **Contexto:** Necesidad de un framework para orquestar el agente de IA y gestionar personalidades.
 - **Decisión:** Utilizar LangChain.
-- **Justificación:** LangChain facilita la creación de agentes complejos, proporciona abstracciones y módulos útiles, y se integra bien con modelos de lenguaje y APIs.
+- **Justificación:** LangChain facilita la creación de agentes complejos, proporciona abstracciones y módulos útiles, y se integra bien con modelos de lenguaje y APIs, además de ofrecer herramientas para la gestión de memoria y personalidades.
 
 ### 2. Modelo de Lenguaje
 - **Contexto:**  Requisito de usar Groq Llama.
@@ -115,9 +115,9 @@
 - **Justificación:** Socket Mode proporciona una conexión segura y en tiempo real con Slack, sin necesidad de exponer la aplicación a la red pública.
 
 ### 4. Base de Datos
-- **Contexto:** Necesidad de persistencia para el contexto de conversación y configuraciones.
+- **Contexto:** Necesidad de persistencia para el contexto de conversación, historial y configuraciones de personalidad.
 - **Decisión:**  Usar SQLite para almacenamiento local.
-- **Justificación:** SQLite es simple, no requiere servidor, adecuado para las necesidades iniciales del proyecto.
+- **Justificación:** SQLite es simple, no requiere servidor, adecuado para las necesidades iniciales del proyecto y la gestión de personalidades.
 
 ### 5. Plataforma de Despliegue
 - **Contexto:** Necesidad de una plataforma para desplegar la aplicación en la nube.

@@ -1,5 +1,5 @@
 ## Problema Fundamental
-El equipo directivo de startups, especialmente en etapas tempranas, a menudo se encuentra sobrecargado con tareas operativas y de gestión del tiempo, lo que les resta enfoque en la toma de decisiones estratégicas y el crecimiento del negocio. La falta de un asistente ejecutivo eficiente y accesible puede llevar a la pérdida de oportunidades, reuniones mal gestionadas y una comunicación interna menos fluida.
+El equipo directivo de startups, especialmente en etapas tempranas, a menudo se encuentra sobrecargado con tareas operativas y de gestión del tiempo, lo que les resta enfoque en la toma de decisiones estratégicas y el crecimiento del negocio. La falta de un asistente ejecutivo eficiente y accesible puede llevar a la pérdida de oportunidades, reuniones mal gestionadas y una comunicación interna menos fluida. Las limitaciones en la gestión de personalidades de los agentes de IA actuales también impiden una experiencia de usuario más rica y adaptada al contexto.
 
 ## Soluciones Actuales
 Actualmente, el problema se aborda de varias maneras, ninguna de las cuales es completamente satisfactoria:
@@ -8,12 +8,12 @@ Actualmente, el problema se aborda de varias maneras, ninguna de las cuales es c
 
 2. **Herramientas de Productividad Genéricas:** Se utilizan herramientas como Google Calendar, Slack, Asana, y otras plataformas de gestión de proyectos. Si bien son útiles, carecen de la inteligencia contextual para anticipar necesidades o proporcionar resúmenes informativos proactivos relevantes para la toma de decisiones de alto nivel.
 
-3. **Soluciones de IA Limitadas:** Algunos chatbots o asistentes virtuales básicos pueden manejar tareas simples, pero no tienen la capacidad de comprender consultas complejas, mantener el contexto en conversaciones prolongadas o integrarse de manera efectiva con las herramientas de comunicación y gestión que utiliza el equipo directivo.
+3. **Soluciones de IA Limitadas:** Algunos chatbots o asistentes virtuales básicos pueden manejar tareas simples, pero no tienen la capacidad de comprender consultas complejas, mantener el contexto en conversaciones prolongadas, gestionar múltiples personalidades o integrarse de manera efectiva con las herramientas de comunicación y gestión que utiliza el equipo directivo.
 
 4. **Sobrecarga del Equipo Directivo:** En muchos casos, los directivos terminan gestionando estas tareas ellos mismos, lo que desvía su tiempo y energía de actividades más estratégicas y de liderazgo.
 
 ## Nuestra Solución
-Lucius, el asistente ejecutivo de IA, se presenta como una solución innovadora y eficiente. Al utilizar el framework LangChain, el modelo de lenguaje Groq Llama, y la integración con Slack a través de Socket Mode, Lucius ofrece una combinación única de capacidades avanzadas de procesamiento del lenguaje natural y una comunicación directa y segura con el equipo directivo. Esto permite a Lucius entender y responder a consultas complejas, mantener conversaciones contextuales y asistir proactivamente al equipo directivo en sus tareas diarias.
+Lucius, el asistente ejecutivo de IA, se presenta como una solución innovadora y eficiente. Al utilizar el framework LangChain, el modelo de lenguaje Groq Llama, y la integración con Slack a través de Socket Mode, Lucius ofrece una combinación única de capacidades avanzadas de procesamiento del lenguaje natural y una comunicación directa y segura con el equipo directivo. Además, la reciente refactorización del sistema de personalidades permite a Lucius adaptar su tono y estilo de respuesta dinámicamente, ofreciendo una experiencia de usuario más rica y personalizada. Esto permite a Lucius entender y responder a consultas complejas, mantener conversaciones contextuales y asistir proactivamente al equipo directivo en sus tareas diarias, con la flexibilidad de ajustar su personalidad según sea necesario.
 
 ## Usuarios Objetivo
 ### Perfiles de Usuario
@@ -54,6 +54,7 @@ Lucius, el asistente ejecutivo de IA, se presenta como una solución innovadora 
 - **Integración Nativa con Slack:** Lucius se integra directamente en Slack, la plataforma de comunicación ya utilizada por el equipo directivo, facilitando la adopción y el uso continuo.
 - **Modelo de Lenguaje Avanzado (Groq Llama):** Utiliza Groq Llama, un modelo de lenguaje potente que permite una comprensión profunda del lenguaje natural y respuestas contextualmente relevantes y precisas.
 - **Personalización para el Rol Ejecutivo:** Diseñado específicamente para asistir a equipos de nivel C, Lucius entiende las prioridades y el contexto del trabajo ejecutivo, proporcionando asistencia verdaderamente relevante.
+- **Sistema de Personalidades Dinámico:** La capacidad de cambiar entre múltiples personalidades y ajustar el tono de respuesta permite a Lucius adaptarse a diferentes situaciones y preferencias de usuario.
 - **Facilidad de Uso:** Interfaz conversacional intuitiva a través de Slack, sin necesidad de formación extensa para empezar a utilizarlo eficazmente.
 - **Comunicación Segura con Socket Mode:** Utiliza Socket Mode para establecer una conexión segura y en tiempo real con Slack, sin necesidad de exponer la aplicación a la red pública.
 
@@ -61,10 +62,11 @@ Lucius, el asistente ejecutivo de IA, se presenta como una solución innovadora 
 - **Eficiencia Mejorada:** Reducir el tiempo dedicado a tareas operativas y de coordinación, permitiendo al equipo directivo enfocarse en actividades estratégicas.
 - **Soporte Decisorio Informado:** Proporcionar resúmenes de información y datos relevantes para facilitar la toma de decisiones rápidas y bien fundamentadas.
 - **Comunicación Fluida:** Facilitar la comunicación interna y la coordinación de tareas a través de una plataforma centralizada y accesible.
+- **Experiencia Personalizada:** Ofrecer interacciones más ricas y adaptadas al contexto gracias al sistema de personalidades dinámico.
 - **Experiencia Intuitiva:** Asegurar que la interacción con Lucius sea natural, eficiente y que requiera mínimo esfuerzo por parte del usuario.
 
 ## Consideraciones de Mercado
 - **Mercado Objetivo:** Startups tecnológicas en crecimiento que buscan optimizar la eficiencia de su equipo directivo.
 - **Competencia:** Herramientas de productividad genéricas, asistentes virtuales básicos, y asistentes ejecutivos humanos.
-- **Ventaja Competitiva:** La especialización en equipos de nivel C de startups, la integración con Slack y el uso de un modelo de lenguaje avanzado como Groq Llama.
+- **Ventaja Competitiva:** La especialización en equipos de nivel C de startups, la integración con Slack, el uso de un modelo de lenguaje avanzado como Groq Llama, y el sistema de personalidades dinámico.
 - **Potencial de Crecimiento:** Escalabilidad a medida que la startup crece y evoluciona, con la posibilidad de añadir funcionalidades y personalizaciones adicionales basadas en la retroalimentación del usuario.

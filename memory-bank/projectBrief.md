@@ -6,7 +6,8 @@ El proyecto consiste en la creación de un Agente de Inteligencia Artificial lla
 - Implementar funcionalidades para ayudar con la programación y recordatorios de reuniones.
 - Proporcionar resúmenes de información relevante para la toma de decisiones.
 - Asistir con la organización de tareas y prioridades.
-- Mantener un tono profesional pero accesible.
+- Implementar un sistema de personalidades dinámico y configurable para Lucius.
+- Mantener un tono profesional pero accesible, con la flexibilidad de ajustar la personalidad.
 
 ## Alcance del Proyecto
 ### Incluido
@@ -14,6 +15,7 @@ El proyecto consiste en la creación de un Agente de Inteligencia Artificial lla
 - Integración con el modelo de lenguaje Groq Llama para el procesamiento del lenguaje natural.
 - Integración con Slack como aplicación para la comunicación con el equipo directivo.
 - Despliegue en la plataforma Railway utilizando Docker para la contenedorización.
+- Refactorización del sistema de personalidades para permitir carga de múltiples personalidades y gestión dinámica.
 
 ### Excluido
 - Desarrollo de una interfaz web adicional (se enfoca en la integración con Slack).
@@ -25,10 +27,11 @@ El proyecto consiste en la creación de un Agente de Inteligencia Artificial lla
 - El agente debe ser capaz de programar reuniones y enviar recordatorios.
 - El agente debe proporcionar resúmenes de información relevante para la toma de decisiones.
 - El agente debe asistir con la organización de tareas y prioridades.
+- El sistema de personalidades debe ser dinámico y permitir cambiar entre diferentes personalidades.
 
 ### No Funcionales
-- El agente debe mantener un tono profesional pero accesible.
-- El agente debe ser fácil de usar y configurar.
+- El agente debe mantener un tono profesional pero accesible, adaptable a diferentes personalidades.
+- El agente debe ser fácil de usar y configurar, incluyendo la gestión de personalidades.
 - El agente debe ser desplegado en una plataforma en la nube (Railway) para garantizar la disponibilidad.
 
 ## Restricciones
@@ -38,6 +41,7 @@ El proyecto consiste en la creación de un Agente de Inteligencia Artificial lla
 
 ## Entregables
 - Código fuente del agente Lucius (lucius_agent.py).
+- Módulo de gestión de personalidades (src/modules/personalities/).
 - Archivo de dependencias (requirements.txt).
 - Archivo Dockerfile para la contenedorización.
 - Documentación del proyecto (memory bank).
@@ -50,3 +54,4 @@ El proyecto consiste en la creación de un Agente de Inteligencia Artificial lla
 - Número de consultas respondidas correctamente por el agente.
 - Tiempo promedio de respuesta del agente.
 - Nivel de satisfacción del equipo directivo con la asistencia proporcionada.
+- Flexibilidad y adaptabilidad del sistema de personalidades.
