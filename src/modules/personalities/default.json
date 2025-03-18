@@ -1,0 +1,11 @@
+{
+  "name": "default",
+  "description": "Default personality with a helpful and concise tone.",
+  "prompt_modifications": {
+    "pre_response": "",
+    "post_response": ""
+  },
+  "response_styles": {},
+  "tone_of_voice": "Neutral and professional",
+  "verbosity": "Concise"
+}
