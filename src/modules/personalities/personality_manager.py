@@ -30,7 +30,5 @@ class PersonalityManager:
     def transform_response(self, response: str) -> str:
         personality = self.get_active_personality()
         if personality:
-            prompt_modifications = personality.get("prompt_modifications", {})
-            pre_response = prompt_modifications.get("pre_response", "")
-            return f"[{personality['name']}]: {response}" # Include personality name in response, without prefix/suffix
+            return response # Return raw response without prefix
         return response
