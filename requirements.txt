@@ -4,7 +4,7 @@ slack-sdk==3.21.3
 
 # LLM
 langchain-groq==0.1.0
-langchain-core==0.1.18
+langchain-core>=0.1.40,<0.2.0
 
 # Herramientas
 requests==2.31.0
