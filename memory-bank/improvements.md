@@ -16,8 +16,14 @@
 - **Mejora de la Precisión en Resúmenes:**  Afinar los algoritmos de resumen de información para asegurar que los resúmenes proporcionados por Lucius sean concisos, relevantes y precisos.
 
 ## Retroalimentación para Incorporar
-- **Solicitar Retroalimentación Proactivamente:**  Implementar un mecanismo para que Lucius solicite retroalimentación de los usuarios de forma proactiva para mejorar continuamente.
-- **Canal de Sugerencias en Slack:**  Crear un canal de Slack dedicado para que los usuarios puedan enviar sugerencias y retroalimentación sobre Lucius.
+- **Solicitar Retroalimentación Proactivamente:** Implementar un mecanismo para que Lucius solicite retroalimentación de los usuarios de forma proactiva para mejorar continuamente.
+- **Canal de Sugerencias en Slack:** Crear un canal de Slack dedicado para que los usuarios puedan enviar sugerencias y retroalimentación sobre Lucius.
+
+## Memory Improvements
+- **Implement Short-Term Memory Management:** Use techniques like editing message lists or summarizing past conversations to manage conversation history and prevent it from growing too large.
+- **Add Long-Term Memory:** Implement a store to persist information about users, their preferences, and past interactions across different Slack threads. This could be used to personalize the agent's responses and provide more relevant assistance.
+- **Explore Memory Types:** Consider how semantic, episodic, and procedural memory could be used to enhance the agent's capabilities. For example, semantic memory could store facts about the user's role and responsibilities, episodic memory could store past actions taken by the agent, and procedural memory could store refined instructions for specific tasks.
+- **Integrate MCP Brave:** Use MCP Brave to access external knowledge sources and enrich the agent's memory with relevant information.
 
 ## Roadmap
 

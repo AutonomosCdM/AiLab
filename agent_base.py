@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from src.modules.memory.memory_manager import MemoryManager
 
 class AgentBase(ABC):
     """
@@ -14,6 +15,7 @@ class AgentBase(ABC):
             name (str): The name of the agent.
         """
         self.name = name
+        self.memory_manager = MemoryManager() # Initialize MemoryManager
         self.context = {}  # Initialize context (can be expanded later)
 
     @abstractmethod
