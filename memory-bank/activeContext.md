@@ -1,31 +1,46 @@
-*Última actualización: 3/18/2025, 11:57 AM*
+*Última actualización: 3/18/2025, 2:04 PM*
 
 ## Enfoque Actual
-Refactorización y mejora del sistema de gestión de personalidades de Lucius, incluyendo la implementación de carga de múltiples personalidades, gestión dinámica de personalidades y mejora en la transformación de respuestas.
+Implementación de un sistema de gestión de herramientas modular y extensible para Lucius, permitiendo la integración flexible de diferentes capacidades como búsqueda web y herramientas de Slack.
 
 ## Cambios Recientes
-### 3/18/2025
-- Refactorización completa de la clase `PersonalityManager` para permitir la carga de múltiples personalidades desde archivos JSON.
-- Implementación de métodos para aplicar diferentes niveles de verbosidad y tonos a las respuestas del agente, mejorando la flexibilidad de la personalidad.
-- Desarrollo de un sistema de prompts dinámicos que ajustan la personalidad de Lucius basándose en el contexto de la conversación.
-- Mejora del script `test_lucius_personality.py` para probar y demostrar las nuevas funcionalidades del sistema de personalidades.
-- Se realizaron pruebas exhaustivas del sistema de personalidades a través del CLI, ajustando la verbosidad y el tono para lograr un equilibrio óptimo.
+### 3/18/2025, 2:04 PM
+- Creación del `ToolManager` en `src/modules/tool_manager.py`
+- Características del `ToolManager`:
+  - Carga dinámica de herramientas
+  - Ejecución flexible de métodos de herramientas
+  - Soporte para agregar nuevas herramientas fácilmente
+- Integración de herramientas existentes:
+  - Brave Search
+  - Slack Manager
+- Diseño modular que permite la extensión independiente de cada herramienta
 
 ## Próximos Pasos
-1.  Verificar el correcto funcionamiento del sistema de personalidades refactorizado en el CLI.
-2.  Integrar el nuevo `PersonalityManager` completamente con el agente Lucius.
-3.  Documentar detalladamente la implementación del sistema de personalidades en `memory-bank/systemPatterns.md` y `memory-bank/techContext.md`.
-4.  Considerar la creación de personalidades adicionales para Lucius para demostrar la flexibilidad del sistema.
+1. Integrar `ToolManager` en el flujo principal de Lucius
+2. Desarrollar más herramientas modulares
+3. Implementar mecanismo de autorización y gestión de permisos para herramientas
+4. Crear interfaz de usuario para explorar y gestionar herramientas disponibles
 
 ## Decisiones Activas
-### Refactorización del Sistema de Personalidades
-- **Objetivo:** Mejorar la flexibilidad, modularidad y eficiencia del manejo de personalidades en Lucius.
-- **Estado:** Implementación y pruebas en curso.
+### Sistema de Gestión de Herramientas Modular
+- **Objetivo:** Crear una arquitectura flexible para integrar capacidades adicionales
+- **Método:** Implementación de `ToolManager` con carga y ejecución dinámica
+- **Estado:** Implementación inicial completada
 
 ## Consideraciones Críticas
-- Asegurar que la refactorización del `PersonalityManager` no afecte negativamente el rendimiento o la estabilidad del agente.
-- Validar que las personalidades se carguen y apliquen correctamente en diferentes contextos de conversación.
+- Mantener la independencia y desacoplamiento entre herramientas
+- Asegurar la seguridad en la ejecución de métodos de herramientas
+- Facilitar la extensibilidad del sistema
+- Minimizar la complejidad de integración de nuevas herramientas
 
 ## Bloqueos o Riesgos
-- Complejidad en la implementación de técnicas avanzadas de procesamiento de lenguaje natural para la detección de sentimiento y temas.
-- Necesidad de realizar ajustes iterativos en la configuración de personalidades para lograr el comportamiento deseado.
+- Gestionar la complejidad de la ejecución dinámica de métodos
+- Asegurar la consistencia en la interfaz de las herramientas
+- Prevenir posibles vulnerabilidades de seguridad en la ejecución de herramientas
+- Mantener un rendimiento óptimo con múltiples herramientas
+
+## Mejoras Futuras
+- Implementar un sistema de plugins más robusto
+- Añadir capacidades de descubrimiento y carga automática de herramientas
+- Desarrollar un mecanismo de configuración y personalización de herramientas
+- Crear una interfaz de administración para gestionar herramientas

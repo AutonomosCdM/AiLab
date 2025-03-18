@@ -1,0 +1,20 @@
+Metadata-Version: 2.2
+Name: lucius
+Version: 0.1.0
+Summary: AI Assistant for Executive Teams
+Author: Autonomos AiLab
+Requires-Python: >=3.8
+Requires-Dist: langchain
+Requires-Dist: langchain-community
+Requires-Dist: langchain-groq
+Requires-Dist: groq
+Requires-Dist: slack_bolt
+Requires-Dist: slack_sdk
+Requires-Dist: python-dotenv
+Requires-Dist: pytest
+Requires-Dist: pytest-asyncio
+Requires-Dist: requests
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

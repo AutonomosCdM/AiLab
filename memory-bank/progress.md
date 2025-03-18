@@ -9,20 +9,22 @@ El agente Lucius ha sido desplegado exitosamente en Railway y está respondiendo
 |------------|--------|----------|----------------|
 | Documentación Memory Bank | Completo | 100% | 3/18/2025 |
 | Agente Lucius | Completo | 100% | 3/18/2025 |
-| Integración con Slack | Completo | 100% | 3/18/2025 |
+| Integración con Slack Toolkit | Completo | 100% | 3/18/2025 |
 | Modelo Groq Llama | Completo | 100% | 3/18/2025 |
 | Despliegue en Railway | Completo | 100% | 3/18/2025 |
 | Sistema de Personalidades | Completo | 100% | 3/18/2025 |
 
 ## Funcionalidades Completadas
 - Implementación del agente Lucius con LangChain y Groq Llama.
-- Integración del agente con Slack API a través de Socket Mode.
+- Integración del agente con Slack API a través de Socket Mode y Langchain Slack Toolkit.
+- Modularización de la funcionalidad de Slack en un módulo dedicado `src/modules/slack_integration`.
 - Despliegue del agente en Railway utilizando Docker.
 - Configuración de variables de entorno para la conexión con Slack y Groq.
 - Resolución de problemas de dependencias y configuración.
 - Refactorización completa del sistema de personalidades para gestión dinámica y carga de múltiples personalidades.
 - Implementación de control de verbosidad y tono en las respuestas del agente.
 - Desarrollo de CLI de prueba interactivo para el sistema de personalidades.
+- Integración y prueba de herramientas del Slack Toolkit, como `slack_send_message`.
 
 ## En Progreso
 - Ninguna en progreso.

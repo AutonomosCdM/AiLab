@@ -1,0 +1,14 @@
+setup.py
+lucius.egg-info/PKG-INFO
+lucius.egg-info/SOURCES.txt
+lucius.egg-info/dependency_links.txt
+lucius.egg-info/requires.txt
+lucius.egg-info/top_level.txt
+src/__init__.py
+src/modules/__init__.py
+src/modules/tool_manager.py
+src/modules/internet_access/__init__.py
+src/modules/internet_access/brave_search_tool.py
+tests/test_brave_search.py
+tests/test_langchain_chain.py
+tests/test_lucius_agent.py

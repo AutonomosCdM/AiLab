@@ -156,16 +156,20 @@ Communication Guidelines:
         """
         personality = self.get_active_personality()
         base_traits = personality.get('traits', [])
-        
+
         # Context-based trait modulation
         dynamic_traits = base_traits.copy()
+
+        # Limitar la influencia del contexto en la personalidad
         
-        # Example dynamic trait selection logic
         if "tecnología" in context_summary.lower():
             dynamic_traits.append("technical_focus")
-        if "ética" in context_summary.lower():
-            dynamic_traits.append("ethical_consideration")
         
+        # 🚨 Eliminar "ethical_consideration" si no es estrictamente necesario
+        if "ética" in context_summary.lower():
+            if "pregunta específica sobre ética" in context_summary.lower():  # Agrega más control
+                dynamic_traits.append("ethical_consideration")
+
         return list(set(dynamic_traits))  # Remove duplicates
 
     def get_active_personality(self):
@@ -176,31 +180,27 @@ Communication Guidelines:
         Aplica el nivel de verbosidad a la respuesta.
         """
         verbosity = personality.get('verbosity', 'Concise')
+
+        # Dividir en oraciones y preservar la puntuación
+        sentences = [s.strip() for s in response.split('.') if s.strip()]
         
-        if verbosity == 'Ultra-concise':
-            # Dividir en oraciones y preservar la puntuación
-            sentences = [s.strip() for s in response.split('.') if s.strip()]
-            
-            if len(sentences) > 1:
-                # Mantener máximo dos oraciones significativas
-                result = '. '.join(sentences[:2]) + '.'
-            else:
-                # Dividir en cláusulas si solo hay una oración
-                clauses = [c.strip() for c in response.split(',') if c.strip()]
-                if len(clauses) > 1:
-                    result = clauses[0] + '.'
-                else:
-                    result = sentences[0] + '.'
-                    
-            return result
-        
-        elif verbosity == 'Concise':
-            # Mantener como máximo 3-4 oraciones
-            sentences = [s.strip() for s in response.split('.') if s.strip()]
-            if len(sentences) > 3:
-                return '. '.join(sentences[:3]) + '.'
+        if not sentences:
             return response
-        
+            
+        if verbosity == 'Ultra-concise':
+            # Solo la primera oración, y si es muy larga, solo la primera parte
+            first_sentence = sentences[0]
+            if len(first_sentence) > 80:  # Si es muy larga
+                parts = first_sentence.split(',')
+                if len(parts) > 1:
+                    return parts[0] + '.'
+            return first_sentence + '.'
+            
+        elif verbosity == 'Concise':
+            # Máximo 1 oración para respuestas normales
+            if len(sentences) > 0:
+                return sentences[0] + '.'
+            
         # Para otros niveles de verbosidad, mantener la respuesta original
         return response
 
@@ -209,21 +209,23 @@ Communication Guidelines:
         Aplica el tono de voz a la respuesta.
         """
         tone = personality.get('tone', 'neutral')
-        
+
         if tone == 'sharp_wit':
             phrases = personality.get('phrases', [])
-            if phrases and random.random() < 0.3:  # 30% de probabilidad
+            # Reducir la probabilidad de añadir frases a solo 10% y solo si no es una pregunta
+            # y la respuesta no es demasiado larga
+            if phrases and "?" not in response and len(response) < 60 and random.random() < 0.1:
                 response += " " + random.choice(phrases)
-        
+
         elif tone == 'professional':
             # Eliminar expresiones demasiado informales o emojis
             response = response.replace('!', '.').replace('?!', '?')
-            
+
         elif tone == 'friendly':
             # Potencialmente añadir un toque amigable
             if random.random() < 0.2 and not response.endswith('!'):
                 response = response.rstrip('.') + '!'
-        
+
         return response
 
     def _apply_context_patterns(self, response: str) -> str:
@@ -301,10 +303,10 @@ Communication Guidelines:
     def transform_response(self, response: str) -> str:
         """
         Transforma la respuesta según la personalidad activa.
-        
+
         Args:
             response: Texto de respuesta original
-        
+
         Returns:
             Texto transformado según la personalidad
         """
@@ -320,6 +322,10 @@ Communication Guidelines:
         
         # Aplicar patrones de respuesta específicos del contexto
         response = self._apply_context_patterns(response)
+        
+        # Eliminar cualquier código de herramienta que pueda estar en la respuesta
+        if "```tool_code" in response:
+            response = response.split("```tool_code")[0].strip()
         
         return response
 
