@@ -30,5 +30,31 @@ class PersonalityManager:
     def transform_response(self, response: str) -> str:
         personality = self.get_active_personality()
         if personality:
-            return response # Return raw response without prefix
+            # Apply verbosity and tone constraints
+            verbosity = personality.get('verbosity', 'Concise')
+            tone = personality.get('tone', 'sharp_wit')
+
+            # If verbosity is set to ultra-concise, make response extremely short
+            if verbosity == 'Ultra-concise':
+                # Use memory-specific templates if available
+                memory_templates = personality.get('memory_response_templates', {})
+                if 'memory_query' in memory_templates and 'memoria' in response.lower():
+                    response = memory_templates['memory_query'][0]
+                elif 'memory_confirmation' in memory_templates and 'memoria' in response.lower():
+                    response = memory_templates['memory_confirmation'][0]
+                else:
+                    # Fallback: extremely short response
+                    sentences = response.split('.')
+                    response = sentences[0].split(',')[0].strip() + '.'
+
+            # Add sarcastic or witty phrases if tone is sharp
+            if tone == 'sharp_wit':
+                phrases = personality.get('phrases', [])
+                if phrases:
+                    # Occasionally add a sarcastic phrase at the end
+                    import random
+                    if random.random() < 0.3:  # 30% chance
+                        response += " " + random.choice(phrases)
+
+            return response
         return response
