@@ -1,0 +1,7 @@
+langchain
+langchain-community
+langchain-groq
+groq
+python-dotenv
+pytest
+pytest-asyncio
